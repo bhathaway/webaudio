@@ -1,4 +1,4 @@
-function Oscilloscope(analyser,width,height) {
+function Oscilloscope(analyser, width, height) {
     this.analyser = analyser;
     this.data = new Uint8Array(analyser.frequencyBinCount);
     this.width = width;
@@ -6,11 +6,10 @@ function Oscilloscope(analyser,width,height) {
 }
 
 Oscilloscope.prototype.draw = function (context) {
-    var data = this.data;
     var quarterHeight = this.height/4;
     var scaling = this.height/256;
 
-    this.analyser.getByteTimeDomainData(data);
+    this.analyser.getByteTimeDomainData(this.data);
     context.strokeStyle = "red";
     context.lineWidth = 1;
     context.fillStyle="#004737";
@@ -25,8 +24,9 @@ Oscilloscope.prototype.draw = function (context) {
     context.save();
     context.strokeStyle = "#006644";
     context.beginPath();
-    if (context.setLineDash)
+    if (context.setLineDash) {
         context.setLineDash([5]);
+    }
     context.moveTo(0,quarterHeight);
     context.lineTo(this.width,quarterHeight);
     context.stroke();
@@ -45,11 +45,13 @@ Oscilloscope.prototype.draw = function (context) {
 
     context.beginPath();
 
-    var zeroCross = findFirstPositiveZeroCrossing(data, this.width);
+    var zeroCross = findFirstPositiveZeroCrossing(this.data, this.width);
 
-    context.moveTo(0,(256-data[zeroCross])*scaling);
-    for (var i=zeroCross, j=0; (j<this.width)&&(i<data.length); i++, j++)
-        context.lineTo(j,(256-data[i])*scaling);
+    context.moveTo(0, (256 - this.data[zeroCross]) * scaling);
+    for (var i = zeroCross, j = 0; j < this.width && i < this.data.length;
+    ++i, ++j) {
+        context.lineTo(j, (256 - this.data[i]) * scaling);
+    }
 
     context.stroke();
 }
