@@ -56,7 +56,7 @@ Oscilloscope.prototype.draw = function (context) {
     context.stroke();
 }
 
-var MINVAL = 134;  // 128 == zero.  MINVAL is the "minimum detected signal" level.
+var MINVAL = 129;  // 128 == zero.  MINVAL is the "minimum detected signal" level.
 
 // As written, I think this function will be a little glitchy
 // for beat tones. There needs to be a better zero crossing check.

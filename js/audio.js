@@ -2,10 +2,8 @@ var audio_context = null;
 
 var osc = null;
 function setDutyCycle(amt) {
-    this.osc2.frequency.value = this.frequency + amt;
+    this.osc2.frequency.value = this.frequency + Math.pow(2, amt);
     this.dcGain = 0.5 - amt;
-    //this.delay.delayTime.value = amt / this.frequency;    
-    //this.dcGain.gain.value = 1.7 * (0.5 - amt);
 }
 
 function start(time) {
@@ -80,7 +78,7 @@ function setupAudio(obj)
 
     oscilloscope = new Oscilloscope(obj.analyser, 512, 256);
 
-    pwm_osc = createPWMOsc(440, .5);
+    pwm_osc = createPWMOsc(440, 0);
 
     pwm_osc.output.connect(audio_context.destination);
     pwm_osc.output.connect(obj.analyser);
