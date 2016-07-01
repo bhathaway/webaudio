@@ -6,6 +6,13 @@ function setDutyCycle(amt) {
     this.dcGain = 0.5 - amt;
 }
 
+function setBaseFreq(f) {
+    var diff = this.osc2.frequency.value - this.osc1.frequency.value;
+    this.frequency = f;
+    this.osc1.frequency.value = f;
+    this.osc2.frequency.value = f + diff;
+}
+
 function start(time) {
     this.osc1.start(time);
     this.osc2.start(time);
@@ -59,6 +66,7 @@ function createPWMOsc(freq, dutyCycle) {
     pwm.dcGain = dcGain;
     pwm.dcOffset = dcOffset;
     pwm.setDutyCycle = setDutyCycle;
+    pwm.setBaseFreq = setBaseFreq;
     pwm.start = start;
     pwm.stop = stop;
 
