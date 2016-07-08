@@ -5,7 +5,8 @@ function Oscilloscope(analyser, width, height) {
     this.height = height;
 }
 
-Oscilloscope.prototype.draw = function (context) {
+Oscilloscope.prototype.draw =
+function (context) {
     var quarterHeight = this.height/4;
     var scaling = this.height/256;
 
@@ -56,12 +57,11 @@ Oscilloscope.prototype.draw = function (context) {
     context.stroke();
 }
 
-var MINVAL = 129;  // 128 == zero.  MINVAL is the "minimum detected signal" level.
-
 // As written, I think this function will be a little glitchy
 // for beat tones. There needs to be a better zero crossing check.
 // For my purposes, the more naive approach might be better.
 function findFirstPositiveZeroCrossing(buffer, buffer_length) {
+    var MINVAL = 129; // 128 == zero, minimum detected signal level.
     var i = 0;
     var first_zero_index = null;
 

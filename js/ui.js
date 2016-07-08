@@ -2,14 +2,13 @@
 window.requestAnimationFrame = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame;
 
-function pushme()
-{
-    pwm_osc.stop(0);
+function pushme() {
+    window.beat_osc.stop(0);
 }
 
-var oscilloscope = null;
-var time_domain_canvas = null;
-var freq_domain_canvas = null;
+window.oscilloscope = null;
+window.time_domain_canvas = null;
+window.freq_domain_canvas = null;
 
 function drawFreqBars(analyser, context) {
     var SPACING = 3;
@@ -37,16 +36,18 @@ function drawFreqBars(analyser, context) {
         magnitude /= multiplier;
 
         var magnitude2 = freqByteData[i * multiplier];
-        context.fillStyle = "hsl( " + Math.round(i * 360 / numBars) + ", 100%, 50%)";
+        context.fillStyle = "hsl( " + Math.round(i * 360 / numBars) +
+          ", 100%, 50%)";
         context.fillRect(i * SPACING, canvasHeight, BAR_WIDTH, -magnitude);
     }
 }
 
 function draw() {  
-    if (oscilloscope) {
-        oscilloscope.draw(time_domain_canvas.myContext);
-        if (freq_domain_canvas) {
-            drawFreqBars(oscilloscope.analyser,freq_domain_canvas.context);
+    if (window.oscilloscope) {
+        window.oscilloscope.draw(window.time_domain_canvas.myContext);
+        if (window.freq_domain_canvas) {
+            drawFreqBars(window.oscilloscope.analyser,
+              window.freq_domain_canvas.context);
         }
     }
 
@@ -54,34 +55,36 @@ function draw() {
 }
 
 function setupCanvases(container) {
-    time_domain_canvas = document.createElement('canvas');
-    time_domain_canvas.width = 512; 
-    time_domain_canvas.height = 256; 
-    time_domain_canvas.id = "scope";
-    time_domain_canvas.myContext = time_domain_canvas.getContext('2d');
+    window.time_domain_canvas = document.createElement('canvas');
+    window.time_domain_canvas.width = 512; 
+    window.time_domain_canvas.height = 256; 
+    window.time_domain_canvas.id = "scope";
+    window.time_domain_canvas.myContext =
+      window.time_domain_canvas.getContext('2d');
 
     if (container) {
-        container.appendChild(time_domain_canvas);
+        container.appendChild(window.time_domain_canvas);
     } else {
-        document.body.appendChild(time_domain_canvas);
+        document.body.appendChild(window.time_domain_canvas);
     }
 
-    freq_domain_canvas = document.createElement('canvas');
-    freq_domain_canvas.width = 1024; 
-    freq_domain_canvas.height = 256; 
-    freq_domain_canvas.id = "freqbars";
-    freq_domain_canvas.context = freq_domain_canvas.getContext('2d');
+    window.freq_domain_canvas = document.createElement('canvas');
+    window.freq_domain_canvas.width = 1024; 
+    window.freq_domain_canvas.height = 256; 
+    window.freq_domain_canvas.id = "freqbars";
+    window.freq_domain_canvas.context =
+      window.freq_domain_canvas.getContext('2d');
 
     if (container) {
-        container.appendChild( freq_domain_canvas );
+        container.appendChild(window.freq_domain_canvas);
     } else {
-        document.body.appendChild( freq_domain_canvas );
+        document.body.appendChild(window.freq_domain_canvas);
     }
 }
 
-function init(){
+function init() {
     setupCanvases();
-    setupAudio(time_domain_canvas);
+    setupAudio(window.time_domain_canvas);
 
     draw();
 }
@@ -90,14 +93,15 @@ window.addEventListener("load", init);
 
 function beatfrequencychange() {
     var val = parseFloat(document.getElementById("beatfrequency").value);
-    pwm_osc.setDutyCycle(val);
-    document.getElementById("beatfrequency_output").value = Math.pow(2, val).toFixed(2);
+    window.beat_osc.setDutyCycle(val);
+    document.getElementById("beatfrequency_output").value =
+      Math.pow(2, val).toFixed(2);
 }
 
 function basefrequencychange() {
     var val = parseFloat(document.getElementById("basefrequency").value);
     var freq = Math.pow(2, val) * 440.0;
-    pwm_osc.setBaseFreq(freq);
+    window.beat_osc.setBaseFreq(freq);
     document.getElementById("basefrequency_output").value = freq.toFixed(1);
 }
 
