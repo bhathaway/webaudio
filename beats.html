@@ -36,9 +36,19 @@
         <p>This demo acquaints the aspiring musician to the beat tone
            phenomenon, the awareness of which is crucial to good intonation.</p>
         <p><button onclick="pushme();">Be quiet!</button></p>
-        <p>Duty cycle control:
-            <input id="dutycycle" type="range" value="0.5" min="0.0" max="1.0" step="0.01"
-            onchange="dutycyclechange()" oninput="dutycyclechange()">
+        <p>Beat frequency control:
+            <input id="beatfrequency" type="range" value="0" min="-4.322" max="4.322" step="0.01"
+            onchange="beatfrequencychange()" oninput="beatfrequencychange()">
+        </p>
+        <p>Beat frequency (cycles per second):
+            <output id="beatfrequency_output">1.0</output>
+        </p>
+        <p>Base frequency control:
+            <input id="basefrequency" type="range" value="0" min="-3" max="3" step="0.01"
+            onchange="basefrequencychange()" oniput="basefrequencychange()">
+        </p>
+        <p>Base frequency (cycles per second):
+            <output id="basefrequency_output">440.0</output>
         </p>
     </body>
 </html>

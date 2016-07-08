@@ -88,7 +88,16 @@ function init(){
 
 window.addEventListener("load", init);
 
-function dutycyclechange() {
-    pwm_osc.setDutyCycle(1 - parseFloat(document.getElementById("dutycycle").value));
+function beatfrequencychange() {
+    var val = parseFloat(document.getElementById("beatfrequency").value);
+    pwm_osc.setDutyCycle(val);
+    document.getElementById("beatfrequency_output").value = Math.pow(2, val).toFixed(2);
+}
+
+function basefrequencychange() {
+    var val = parseFloat(document.getElementById("basefrequency").value);
+    var freq = Math.pow(2, val) * 440.0;
+    pwm_osc.setBaseFreq(freq);
+    document.getElementById("basefrequency_output").value = freq.toFixed(1);
 }
 
