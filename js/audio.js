@@ -2,35 +2,16 @@
 window.audio_context = null;
 window.beat_osc = null;
 
-function createDCOffset(audio_context) {
-    var buffer_source = audio_context.createBufferSource(); 
-    buffer_source.buffer =
-      audio_context.createBuffer(1, 1, audio_context.sampleRate);
-    var data = buffer_source.buffer.getChannelData(0);
-    for (var i = 0; i < 1; ++i) {
-        data[i] = 0;
-    }
-
-    buffer_source.loop = true;
-    return buffer_source;
-}
-
 function BeatToneOsc(audio_context, freq, duty_cycle) {
     this.osc1 = audio_context.createOscillator();
     this.osc2 = audio_context.createOscillator();
     this.output = audio_context.createGain();
-    this.delay = audio_context.createDelay();
     this.osc1.type="sine";
     this.osc2.type="sine";
     this.osc1.frequency.value=freq;
     this.osc2.frequency.value=freq;
     this.osc1.connect(this.output);
     this.osc2.connect(this.output);
-    this.delay.connect(this.output);
-    this.dc_offset = createDCOffset(audio_context);
-    this.dc_gain = audio_context.createGain();
-    this.dc_offset.connect(this.dc_gain);
-    this.dc_gain.connect(this.output);
 
     this.output.gain.value = 0.5;  // purely for debugging.
 
@@ -41,7 +22,7 @@ function BeatToneOsc(audio_context, freq, duty_cycle) {
 BeatToneOsc.prototype.setDutyCycle =
 function (amt) {
     this.osc2.frequency.value = this.frequency + Math.pow(2, amt);
-    this.dc_gain = 0.5 - amt;
+    //this.dc_gain = 0.5 - amt;
 }
 
 BeatToneOsc.prototype.setBaseFreq =
@@ -56,14 +37,12 @@ BeatToneOsc.prototype.start =
 function (time) {
     this.osc1.start(time);
     this.osc2.start(time);
-    this.dc_offset.start(time);
 }
 
 BeatToneOsc.prototype.stop =
 function (time) {
     this.osc1.stop(time);
     this.osc2.stop(time);
-    this.dc_offset.stop(time);
 }
 
 function setupAudio(obj)
