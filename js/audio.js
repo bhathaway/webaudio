@@ -22,7 +22,6 @@ function BeatToneOsc(audio_context, freq, duty_cycle) {
 BeatToneOsc.prototype.setDutyCycle =
 function (amt) {
     this.osc2.frequency.value = this.frequency + Math.pow(2, amt);
-    //this.dc_gain = 0.5 - amt;
 }
 
 BeatToneOsc.prototype.setBaseFreq =
