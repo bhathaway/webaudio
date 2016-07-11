@@ -52,7 +52,8 @@ function setupAudio(obj)
     obj.analyser = window.audio_context.createAnalyser();
     obj.analyser.fftSize = 2048;
 
-    oscilloscope = new Oscilloscope(obj.analyser, 512, 256);
+    window.oscilloscope = new Oscilloscope(obj.analyser, 512, 256);
+    window.spectrometer = new Spectrometer(obj.analyser, 1024, 256);
 
     beat_osc = new BeatToneOsc(window.audio_context, 440, 0);
 
