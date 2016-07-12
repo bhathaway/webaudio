@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Visualization of Microphone Input</title>
+        <style>
+            body { margin: 1em;}
+            p { margin: 1em 0;}
+            #output {
+                width: 512px;
+                height: 256px;
+            }
+            #scope {
+                border:  3px solid gray;
+                border-radius: 15px;
+                background: teal;
+                box-shadow: 7px 10px 5px black;
+            }
+            #freqbars {
+                border:  3px solid gray;
+                border-radius: 15px;
+                background: black;
+                box-shadow: 7px 10px 5px black;
+                display: block;
+                margin-top: 1cm;        
+            }
+        </style>
+
+        <script src="mic_spectrum_ui.js"></script>
+    </head>
+
+    <body>
+        <p>This demo simply captures audio from the microphone and shows
+           the oscilloscope and spectrometer view of it.</p>
+    </body>
+</html>
+
