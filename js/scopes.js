@@ -70,7 +70,7 @@ function (context) {
     var BAR_WIDTH = 1;
     var numBars = Math.round(this.width / SPACING);
 
-    this.analyser.getByteFrequencyData(this.data); 
+    this.analyser.getByteFrequencyData(this.data);
 
     context.clearRect(0, 0, this.width, this.height);
     context.lineCap = 'round';
